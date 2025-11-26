@@ -19,6 +19,12 @@ public class Database implements Serializable {
         initializeIndexes();
     }
 
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        initializeIndexes();
+        rebuildIndexes();
+    }
+
     private void initializeIndexes() {
         this.primaryKeyIndex = new ConcurrentHashMap<>();
         this.fieldIndexes = new ConcurrentHashMap<>();
